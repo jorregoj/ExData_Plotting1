@@ -1,0 +1,6 @@
+library(dplyr)
+data2 <- read.table("household_power_consumption.txt",sep=";",header=TRUE,na.strings="?",)
+data2 <- data2 %>% filter(Date %in% c("1/2/2007","2/2/2007"))
+png(filename="Plot1.png",width=400,height=400)
+hist(data2$Global_active_power,main="Global Active Power",col="darkorange2",xlab="Global Active Power(kilowatts)")
+dev.off()
