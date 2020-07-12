@@ -1,0 +1,17 @@
+library(dplyr)
+data2 <- read.table("household_power_consumption.txt",sep=";",header=TRUE,na.strings="?",)
+data2 <- data2 %>% filter(Date %in% c("1/2/2007","2/2/2007"))
+datetime <- strptime(paste(data2$Date, data2$Time, sep=" "), "%d/%m/%Y %H:%M:%S")
+png(filename="Plot4.png",width=480,height=480)
+
+par(mfrow=c(2,2))
+plot(datetime,data2$Global_intensity,type="l",xlab="",ylab="Global Active Power")
+plot(datetime,data2$Voltage,type="l",ylab="Voltage")
+plot(datetime,data2$Sub_metering_1,type="n",xlab="",ylab="Energy sub metering")
+with(data2,lines(datetime,Sub_metering_1))
+with(data2,lines(datetime,Sub_metering_2,col="red"))
+with(data2,lines(datetime,Sub_metering_3,col="blue"))
+legend("topright",lty=,col=c("black","red","blue"),
+       legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),bty="n",lwd=2.5)
+plot(datetime,data2$Global_reactive_power,type="l",ylab="Global_reactive_power")
+dev.off()
